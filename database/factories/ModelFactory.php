@@ -13,6 +13,7 @@
 
 use App\User;
 use App\Category;
+use App\Product;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
@@ -30,10 +31,21 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Category::class, function (Faker\Generator $faker) {
-    static $password;
 
     return [
         'name' => $faker->word,
         'description' => $faker->paragraph(1),
+    ];
+});
+
+$factory->define(App\Product::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->word,
+        'description' => $faker->paragraph(1),
+        'quantity' => $faker->numberBetween(1, 10),
+        'status' => $faker->randomElement([Product::AVAILABLE_PRODUCT], Product::UNAVAILABLE_PRODUCT),
+        'image' => $faker->randomElement(['1.jpg', '2.jpg', '3.jpg']),
+        'seller_id' => User::all()->random()->id,
     ];
 });
