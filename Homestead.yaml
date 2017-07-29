@@ -1,0 +1,19 @@
+ip: 192.168.10.11
+memory: 512
+cpus: 1
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: 'C:\Users\Gavin\Projects\GitHub\udemy\RESTfulAPI'
+        to: /home/vagrant/restfulapi
+sites:
+    -
+        map: restfulapi.adev
+        to: /home/vagrant/restfulapi/public
+databases:
+    - homestead
+name: restfulapi
+hostname: restfulapi
