@@ -65,8 +65,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-             ->middleware('api')
+        // todo - set this up to use the default Laravel api prefix later on (bad practice to hardcode this logic..)
+        Route::middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
