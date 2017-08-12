@@ -16,8 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // disable foreign key check
-        DB::statement('SET FOREIGN_KEYS_CHECK = 0');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
         User::truncate();
         Category::truncate();
@@ -25,7 +24,12 @@ class DatabaseSeeder extends Seeder
         Transaction::truncate();
         DB::table('category_product')->truncate();
 
-        $usersQuantity = 200;
+        User::flushEventListeners();
+        Category::flushEventListeners();
+        Product::flushEventListeners();
+        Transaction::flushEventListeners();
+
+        $usersQuantity = 1000;
         $categoriesQuantity = 30;
         $productsQuantity = 1000;
         $transactionsQuantity = 1000;
@@ -33,15 +37,14 @@ class DatabaseSeeder extends Seeder
         factory(User::class, $usersQuantity)->create();
         factory(Category::class, $categoriesQuantity)->create();
 
-        // associate a product to a category
         factory(Product::class, $productsQuantity)->create()->each(
             function ($product) {
                 $categories = Category::all()->random(mt_rand(1, 5))->pluck('id');
 
                 $product->categories()->attach($categories);
             });
-        );
 
         factory(Transaction::class, $transactionsQuantity)->create();
+
     }
 }
